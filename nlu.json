@@ -66,6 +66,30 @@
     "patterns" : [ ],
     "slots" : [ ],
     "priority" : 0
+  }, {
+    "path" : "/корзина",
+    "enabled" : true,
+    "shared" : false,
+    "phrases" : [ {
+      "text" : "корзина"
+    }, {
+      "text" : "что в корзине"
+    }, {
+      "text" : "покажи карзину"
+    }, {
+      "text" : "список"
+    }, {
+      "text" : "покупки"
+    }, {
+      "text" : "в корзину"
+    }, {
+      "text" : "list"
+    } ],
+    "classificationRules" : {
+      "refs" : [ ]
+    },
+    "patterns" : [ ],
+    "priority" : 0
   } ],
   "entities" : [ ],
   "enabledSystemEntities" : [ "duckling.number", "duckling.time", "duckling.duration", "duckling.phone-number", "duckling.email", "duckling.url" ],

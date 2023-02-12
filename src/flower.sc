@@ -44,6 +44,7 @@ theme: /
             }
         buttons:
             "Назад" -> ../chooseFlower
+            "1" -> ../getColor
             
         state: clickPlease
             q: *
@@ -59,13 +60,14 @@ theme: /
     state: chooseQuantity
         InputNumber:
             prompt = Укажите значение цифрой, сколько цветов вы хотели бы заказать (от 1 до 101)
-            failureMessage = ["Не могли бы вы попробовать еще раз?", "Пожалуйста, введите число в диапазоне 2–101."]
+            failureMessage = ["Не могли бы вы попробовать еще раз?", "Пожалуйста, введите число в диапазоне 1–101."]
             minValue = 1
             maxValue = 101
             varName = quantity
             then = /chooseQuantity/getQuantity
             
         state: getQuantity
+            intent: /breakpoint
             script:
                 $session.quantity = parseInt($session.quantity);
                 $session.cart.push({
@@ -75,11 +77,6 @@ theme: /
                 });
             a: Добавим ещё позицию или оформляем?
             buttons:
-                "Меню" -> /chooseFlower
+                "Меню" -> ../../chooseFlower
             buttons:
                 "Оформить заказ" -> /Cart
-                
-            state: clickPlease
-            q: *
-            a: Пожалуйста, используйте кнопки
-            go!: ..
