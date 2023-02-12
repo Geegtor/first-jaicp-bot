@@ -59,7 +59,7 @@ theme: /
     state: chooseQuantity
         InputNumber:
             prompt = Укажите значение цифрой, сколько цветов вы хотели бы заказать (от 1 до 101)
-            failureMessage = ["Не могли бы вы попробовать еще раз?", "Пожалуйста, введите число в диапазоне 1–101."]
+            failureMessage = ["Не могли бы вы попробовать еще раз?", "Пожалуйста, введите число в диапазоне 2–101."]
             minValue = 1
             maxValue = 101
             varName = quantity
@@ -67,7 +67,7 @@ theme: /
             
         state: getQuantity
             script:
-                $session.quantity = parseInt(quantity);
+                $session.quantity = parseInt($session.quantity);
                 $session.cart.push({
                     name: $session.flower, 
                     id: $session.flower_id, 
