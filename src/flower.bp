@@ -1,0 +1,15 @@
+{
+  "positions" : [ {
+    "id" : "/chooseFlower",
+    "x" : 400,
+    "y" : 89
+  }, {
+    "id" : "/chooseColor",
+    "x" : 410,
+    "y" : 1285
+  }, {
+    "id" : "/chooseQuantity",
+    "x" : 416,
+    "y" : -416
+  } ]
+}
