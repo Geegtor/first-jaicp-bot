@@ -1,4 +1,4 @@
-name: echo-template
+name: SellFlowersBot
 
 entryPoint: main.sc
 

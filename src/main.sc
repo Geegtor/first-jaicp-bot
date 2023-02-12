@@ -1,3 +1,5 @@
+require: flower.sc
+
 theme: /
     
     state: start
@@ -19,8 +21,8 @@ theme: /
         state: rememberCity
             script:
                 $client.city = $request.query
-                $session.cart = {};
-            go!: ../../bye
+                $session.cart = [];
+            go!: /chooseFlower
                 
         state: clickPlease
             q: *
