@@ -57,21 +57,21 @@ theme: /
         "3" -> ./getQuantity
         "7" -> ./getQuantity
         "21" -> ./getQuantity
-        
-        state: clickPlease
-            q: *
-            a: Пожалуйста, используйте кнопки для выбора
-            go!: ..
             
         state: getQuantity
             script:
                 $session.quantity = parseInt($request.query);
-                $session.cart.push(name: $session.flower, id: $session.flower_id, quantity: $session.quantity});
+                $session.cart.push({name: $session.flower, id: $session.flower_id, quantity: $session.quantity});
             a: Добавив ещё позицию или оформляем?
             buttons:
                 "Меню" -> /chooseFlower
                 
             state: clickPlease
+            q: *
+            a: Пожалуйста, используйте кнопки для выбора
+            go!: ..
+        
+        state: clickPlease
             q: *
             a: Пожалуйста, используйте кнопки для выбора
             go!: ..
