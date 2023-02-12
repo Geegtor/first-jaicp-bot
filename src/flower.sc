@@ -57,17 +57,17 @@ theme: /
         go!: /chooseQuantity
             
     state: chooseQuantity
-        a: Укажите количество цветов цифрой
-        buttons:
-            "3" -> ./getQuantity
-            "5" -> ./getQuantity
-            "7" -> ./getQuantity
-            "15" -> ./getQuantity
-            "21" -> ./getQuantity
+        InputNumber:
+            prompt = Укажите значение цифрой, сколько цветов вы хотели бы заказать (от 1 до 101)
+            failureMessage = ["Не могли бы вы попробовать еще раз?", "Пожалуйста, введите число в диапазоне 1–101."]
+            minValue = 1
+            maxValue = 101
+            varName = quantity
+            then = /chooseQuantity/getQuantity
             
         state: getQuantity
             script:
-                $session.quantity = parseInt($request.query);
+                $session.quantity = parseInt(quantity);
                 $session.cart.push({
                     name: $session.flower, 
                     id: $session.flower_id, 
@@ -81,5 +81,5 @@ theme: /
                 
             state: clickPlease
             q: *
-            a: Пожалуйста, укажите количество цифрой
+            a: Пожалуйста, используйте кнопки
             go!: ..

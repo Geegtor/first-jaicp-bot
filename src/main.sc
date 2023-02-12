@@ -9,7 +9,7 @@ theme: /
             $context.session = {};
             $context.client = {};
             $context.temp = {};
-        a: Привет, я бот для заказа цветов. Уже начинаем оформлять!
+        a: Привет, я бот для заказа цветов.
         go!: /chooseCity
 
     state: chooseCity || modal = true
