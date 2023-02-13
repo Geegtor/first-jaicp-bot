@@ -3,7 +3,7 @@ require: cart.sc
 
 theme: /
     
-    state: start
+    state: Start
         q!: $regex</start>
         script:
             $context.responce = {};
@@ -11,31 +11,31 @@ theme: /
             $context.client = {};
             $context.temp = {};
         a: Привет, я бот для заказа цветов.
-        go!: /chooseCity
+        go!: /ChooseCity
 
-    state: chooseCity || modal = true
+    state: ChooseCity || modal = true
         a: Выберите ваш город:
         buttons:
-            "Санкт-Петербург" -> ./rememberCity
-            "Москва"  -> ./rememberCity
+            "Санкт-Петербург" -> ./RememberCity
+            "Москва"  -> ./RememberCity
             
-        state: rememberCity
+        state: RememberCity
             script:
                 $client.city = $request.query
                 $session.cart = [];
-            go!: /chooseFlower
+            go!: /ChooseFlower
                 
-        state: clickPlease
+        state: ClickPlease
             q: *
             a: Пожалуйста, используйте кнопки для выбора
             go!: ..
     
-    state: bye
+    state: Bye
         intent!: /пока
         a: {{$context.client.city}}
 
-    state: noMatch || noContext = true
+    state: NoMatch || noContext = true
         event!: noMatch
         a: Я не понял, простите, вы сказали {{$request.query}}
-        go!: ../chooseCity
+        go!: ../ChooseCity
         

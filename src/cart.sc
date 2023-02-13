@@ -7,37 +7,21 @@ theme: /
         a: Ваша корзина:
         script:
             $temp.totalSum = 0;
-            var n = 0;
             for (var i = 0; i < $session.cart.length; i++) {
                 var current_position = $session.cart[i];
-                for (var id = 1; id < Object.keys(db).length + 1; id++) {
-                    if (current_position.name == db[id].value.title){
-                        var color = _.find(db[id].value.colors, function(color){
-                            return color.id === current_position.id;
-                        });
-
-                        n++;
-
-                        if (!color) {
-                            $reactions.answer("Что-то пошло не так, вариант не найден для id " + current_position.id);
-                        } else {
-                            $reactions.answer(n + ". " + current_position.name + ", " + color.name + "\nЦена: " + color.price + "\nКоличество: " + current_position.quantity);
-
-                            $reactions.inlineButtons({text: "Удалить", callback_data: current_position.name});
-
-                            $temp.totalSum += color.price * current_position.quantity;
-                        }
-                    }
-                }
+                $reactions.answer(i + ". " + current_position.name + ", " + current_position.color + "\nЦена: " + current_position.price + "\nКоличество: " + current_position.quantity);
+                $reactions.inlineButtons({text: "Удалить", callback_data: current_position.name});
+                $temp.totalSum += current_position.total;
             }
 
         a: Общая сумма заказа: {{ $temp.totalSum }} рублей.
         a: Если все верно, отправьте свой номер телефона, и наш менеджер с вами свяжется.
         buttons:
             {text: "Отправить номер телефона", request_contact: true}
-            "Меню" -> /chooseFlower
-
-        state: Edit
+            "Меню" -> /ChooseFlower
+            #"1" -> /GetPhoneNumber
+        #todo
+        state: Edit 
             event: telegramCallbackQuery
             script:
                 var name = $request.rawRequest.callback_query.data;
@@ -61,21 +45,18 @@ theme: /
             $client.phone_number = $request.rawRequest.message.contact.phone_number;
             for (var i = 0; i < $session.cart.length; i++) {
                 var current_position = $session.cart[i];
-                var color = _.find(db[id].value.colors, function(color){
-                    return color.id === current_position.id;
-                });
-                $temp.totalSum += color.price * current_position.quantity;
-                        
+                var magicString = $session.cart[i].quantity
                 $integration.googleSheets.writeDataToLine(
-                    "4404df16-bfc7-4bc6-9f84-65d02d000217",
                     "1571cbcb-0875-4d5d-8462-e0246a60d3b4",
+                    "1x8NnGzNDQUroV6hp1BpoiZ9OoK142Ke2wyomqM60De0",
                     "Sheet1",
                     [
-                        $jsapi.currentTime(), 
+                        $client.city,
                         $client.phone_number, 
                         current_position.name,
-                        current_position.quantity,
-                        $temp.totalSum,    
+                        current_position.color,
+                        toPrettyString(current_position.quantity),
+                        toPrettyString(current_position.total),
                     ]
                 );
             }

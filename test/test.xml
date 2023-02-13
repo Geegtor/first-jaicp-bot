@@ -1,0 +1,55 @@
+<test>
+
+     <test-case id="ChooseCity">
+        <q>/start</q>
+        <responseData field="replies[1].buttons">[{text:"Санкт-Петербург",transition:"/ChooseCity/RememberCity"},{text:"Москва",transition:"/ChooseCity/RememberCity"}]</responseData>
+        <a state="/ChooseCity"/>
+        <q>Спб</q>
+        <a state=""/>
+        <a state="/ChooseCity"/>
+    </test-case>
+
+    <test-case  id="ReturnToMenu">
+        <q>/start</q>
+        <a state="/ChooseCity"/>
+        <q>Санкт-Петербург</q>
+        <a state="/ChooseFlower"/>
+        <responseData field="replies[1].buttons">[ {text: "Роза", transition: "/ChooseFlower/GetName"} ] </responseData>
+        <responseData field="replies[2].buttons">[ {text: "Тюльпан", transition: "/ChooseFlower/GetName"} ] </responseData>
+        <responseData field="replies[3].buttons">[ {text: "Архидея", transition: "/ChooseFlower/GetName"} ] </responseData>
+        <q>Маргарита</q>
+        <a state="/ChooseColor"/>
+        <q>Назад</q>
+        <a state="/ChooseFLower"/>
+    </test-case>
+
+    <test-case id="WholeScript">
+        <q>/start</q>
+        <a state="/ChooseCity"/>
+        <q>Санкт-Петербург</q>
+        <a state="/ChooseFlower"/>
+        <responseData field="replies[1].buttons">[ {text: "Роза", transition: "/ChooseFlower/GetName"} ] </responseData>
+        <q>Маргарита</q>
+        <a state="/ChooseColor"/>
+        <responseData field="replies[1].buttons"> [{ text:"Красные 70 см 299 руб. / шт.",callback_data:1 }] </responseData>
+        <responseData field="replies[2].buttons"> [{ text:"Белые 70 см  299 руб. / шт.",callback_data:2 }] </responseData>
+        <responseData field="replies[3].buttons"> [{ text:"Красные 35 см  299 руб. / шт.",callback_data:3 }] </responseData>
+        <responseData field="replies[4].buttons"> [{ text:"Белые 70 см  299 руб. / шт.",callback_data:4 }] </responseData>
+        <request>{type:"query",query:"1",event:"telegramCallbackQuery"}</request>
+        <a state="/ChooseQuantity"/>
+        <responseData field="replies[1].buttons"> [
+            {text:"1",transition:"/ChooseQuantity/GetQuantity"},
+            {text:"2",transition:"/ChooseQuantity/GetQuantity"},
+            {text:"3",transition:"/ChooseQuantity/GetQuantity"}]</responseData>
+        <q>2</q>
+        <a state="/ChooseQuantity/GetQuantity"/>
+        <responseData field="replies[1].buttons"> [{text:"Меню",transition:"/ChooseFlower"}]</responseData>
+        <responseData field="replies[2].buttons"> [{text:"Оформить заказ",transition:"/Cart"}]</responseData>
+        <request>{query:"Оформить заказ",rawRequest:{message:{message_id:1}}}</request>
+        <a state="/Cart"/>
+        <responseData field="replies[2].buttons"> [{ text:"Удалить",callback_data:"Роза" }] </responseData>
+        <request>{type:"query",event:"telegramSendContact",rawRequest:{message:{message_id:1, contact: {phone_number:"+7123123123"}}}}</request>
+        <a state="/GetPhoneNumber"/>
+    </test-case>
+
+</test>

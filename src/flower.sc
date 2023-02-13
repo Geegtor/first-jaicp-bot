@@ -4,30 +4,30 @@ require: data/db.csv
 
 theme: /
     
-    state: chooseFlower
+    state: ChooseFlower
         a: Какие цветы хотели бы заказать?
         script:
             for (var i = 1; i < Object.keys(db).length + 1; i++) {
                 var region = db[i].value.region;
                 if (_.contains(region, $client.city)) {
                     var button_name = db[i].value.title;
-                    $reactions.buttons({text: button_name, transition: 'getFlower'})
+                    $reactions.buttons({text: button_name, transition: 'GetFlower'})
                 }
             }
         buttons:
-            "Назад" -> ../chooseCity
+            "Назад" -> ../ChooseCity
             
-        state: getFlower
+        state: GetFlower
             script:
                 $session.flower = $request.query;
-            go!: /chooseColor
+            go!: /ChooseColor
             
-        state: clickPlease
+        state: ClickPlease
             q: *
             a: Пожалуйста, используйте кнопки для выбора
             go!: ..
             
-    state: chooseColor
+    state: ChooseColor
         a: Выберете наиболее подходящий вариант:
         script:
             for (var i = 1; i < Object.keys(db).length + 1; i++) {
@@ -38,45 +38,57 @@ theme: /
                         $reactions.inlineButtons({
                             text: button_name, 
                             callback_data: colors[j].id
-                            })
+                        })
                     }
                 }
             }
         buttons:
-            "Назад" -> ../chooseFlower
-            "1" -> ../getColor
+            "Назад" -> ../ChooseFlower
+            #"1" -> ../GetColor #debugPoint
             
-        state: clickPlease
+        state: ClickPlease
             q: *
             a: Пожалуйста, используйте кнопки для выбора
             go!: ..
             
-    state: getColor
+    state: GetColor
         event: telegramCallbackQuery
         script:
             $session.flower_id = parseInt($request.query)
-        go!: /chooseQuantity
             
-    state: chooseQuantity
+            for (var id = 1; id < Object.keys(db).length + 1; id++) {
+                if ($session.flower == db[id].value.title) {
+                    var color = _.find(db[id].value.colors, function(color){
+                        return color.id === $session.flower_id;
+                    });
+                    $session.flower_color = color.name;
+                    $session.flower_price = color.price;
+                }
+            }
+        go!: /ChooseQuantity
+            
+    state: ChooseQuantity
         InputNumber:
-            prompt = Укажите значение цифрой, сколько цветов вы хотели бы заказать (от 1 до 101)
-            failureMessage = ["Не могли бы вы попробовать еще раз?", "Пожалуйста, введите число в диапазоне 1–101."]
+            prompt = Укажите значение цифрой, количество цветов вы хотели бы заказать (от 1 до 101)
+            failureMessage = "Пожалуйста, введите число в диапазоне 1–101."
             minValue = 1
             maxValue = 101
             varName = quantity
-            then = /chooseQuantity/getQuantity
+            then = /ChooseQuantity/GetQuantity
             
-        state: getQuantity
-            intent: /breakpoint
+        state: GetQuantity
             script:
                 $session.quantity = parseInt($session.quantity);
                 $session.cart.push({
-                    name: $session.flower, 
-                    id: $session.flower_id, 
+                    id: $session.flower_id,
+                    name: $session.flower,
+                    color: $session.flower_color,
+                    price: $session.flower_price,
                     quantity: $session.quantity,
+                    total: $session.quantity * $session.flower_price,
                 });
             a: Добавим ещё позицию или оформляем?
             buttons:
-                "Меню" -> ../../chooseFlower
+                "Меню" -> ../../ChooseFlower
             buttons:
                 "Оформить заказ" -> /Cart
