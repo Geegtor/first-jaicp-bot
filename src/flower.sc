@@ -75,6 +75,8 @@ theme: /
             maxValue = 101
             varName = quantity
             then = /ChooseQuantity/GetQuantity
+        buttons:
+            "Назад" -> ../ChooseColor
             
         state: GetQuantity
             script:
