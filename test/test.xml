@@ -14,9 +14,9 @@
         <a state="/ChooseCity"/>
         <q>Санкт-Петербург</q>
         <a state="/ChooseFlower"/>
-        <responseData field="replies[1].buttons">[ {text: "Роза", transition: "/ChooseFlower/GetName"} ] </responseData>
-        <responseData field="replies[2].buttons">[ {text: "Тюльпан", transition: "/ChooseFlower/GetName"} ] </responseData>
-        <responseData field="replies[3].buttons">[ {text: "Архидея", transition: "/ChooseFlower/GetName"} ] </responseData>
+        <responseData field="replies[0].buttons">[ {text: "Роза", transition: "/ChooseFlower/GetName"} ] </responseData>
+        <responseData field="replies[1].buttons">[ {text: "Тюльпан", transition: "/ChooseFlower/GetName"} ] </responseData>
+        <responseData field="replies[2].buttons">[ {text: "Архидея", transition: "/ChooseFlower/GetName"} ] </responseData>
         <q>Маргарита</q>
         <a state="/ChooseColor"/>
         <q>Назад</q>

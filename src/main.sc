@@ -16,8 +16,8 @@ theme: /
     state: ChooseCity || modal = true
         a: Выберите ваш город:
         buttons:
-            "Санкт-Петербург" -> ./RememberCity
             "Москва"  -> ./RememberCity
+            "Санкт-Петербург" -> ./RememberCity
             
         state: RememberCity
             script:
