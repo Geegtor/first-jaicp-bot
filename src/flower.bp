@@ -11,5 +11,25 @@
     "id" : "/chooseQuantity",
     "x" : 416,
     "y" : -416
+  }, {
+    "id" : "/ChooseFlower",
+    "x" : 1840,
+    "y" : 1604
+  }, {
+    "id" : "/ChooseColor",
+    "x" : 2454,
+    "y" : 1085
+  }, {
+    "id" : "/GetColor",
+    "x" : 2459,
+    "y" : 1697
+  }, {
+    "id" : "/ChooseQuantity",
+    "x" : 3019,
+    "y" : 1410
+  }, {
+    "id" : "/ChooseQuantity/GetQuantity",
+    "x" : 340,
+    "y" : 150
   } ]
 }

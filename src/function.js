@@ -6,7 +6,6 @@ function deleteFromCart(name) {
             $session.cart.splice(i, 1);
         }
     }
-    log('!!!!!! CART: ' + JSON.stringify($session.cart));
 }
 
 function getTotalSum() {
@@ -24,7 +23,6 @@ function getTotalSum() {
             }
         }
     }
-    log("!!!!!!!!!!!! totalSum = " + totalSum);
     return totalSum;
 }
 

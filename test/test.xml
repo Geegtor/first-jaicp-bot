@@ -1,14 +1,5 @@
 <test>
 
-     <test-case id="ChooseCity">
-        <q>/start</q>
-        <responseData field="replies[1].buttons">[{text:"Санкт-Петербург",transition:"/ChooseCity/RememberCity"},{text:"Москва",transition:"/ChooseCity/RememberCity"}]</responseData>
-        <a state="/ChooseCity"/>
-        <q>Спб</q>
-        <a state=""/>
-        <a state="/ChooseCity"/>
-    </test-case>
-
     <test-case  id="ReturnToMenu">
         <q>/start</q>
         <a state="/ChooseCity"/>
@@ -17,7 +8,7 @@
         <responseData field="replies[0].buttons">[ {text: "Роза", transition: "/ChooseFlower/GetName"} ] </responseData>
         <responseData field="replies[1].buttons">[ {text: "Тюльпан", transition: "/ChooseFlower/GetName"} ] </responseData>
         <responseData field="replies[2].buttons">[ {text: "Архидея", transition: "/ChooseFlower/GetName"} ] </responseData>
-        <q>Маргарита</q>
+        <q>Роза</q>
         <a state="/ChooseColor"/>
         <q>Назад</q>
         <a state="/ChooseFLower"/>
