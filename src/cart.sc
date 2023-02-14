@@ -46,10 +46,9 @@ theme: /
             //$client.phone_number = '79111111111'
             $client.phone_number = $request.rawRequest.message.contact.phone_number;
             
-            var text = "Новый заказ для ";
+            var text = "Новый заказ для " + $client.phone_number + ":\n";
             for (var i = 0; i < $session.cart.length; i++) {
                 var current_position = $session.cart[i];
-                 text += $client.phone_number + ":\n";
 
                 $integration.googleSheets.writeDataToLine(
                     "1571cbcb-0875-4d5d-8462-e0246a60d3b4",
