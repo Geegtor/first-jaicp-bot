@@ -10,7 +10,7 @@ theme: /
             for (var i = 0; i < $session.cart.length; i++) {
                 var current_position = $session.cart[i];
                 $reactions.answer(i + 1 + ". " + current_position.name + ", " + current_position.color + "\nЦена: " + current_position.price + "\nКоличество: " + current_position.quantity);
-                $reactions.inlineButtons({text: "Удалить", callback_data: current_position.name});
+                //$reactions.inlineButtons({text: "Удалить", callback_data: current_position.name});
                 $temp.totalSum += current_position.total;
             }
 
@@ -32,7 +32,7 @@ theme: /
                 editText($session.messageId, 'Общая сумма заказа: ' + getTotalSum() + ' руб.');
             if: $session.cart.length == 0
                 a: Вы очистили корзину
-                go!: /chooseFlower
+                go!: /ChooseFlower
 
             state: ClickButtons
                 q: *
@@ -42,9 +42,14 @@ theme: /
     state: GetPhoneNumber
         event: telegramSendContact
         script:
+            $temp.totalSum = 0;
+            //$client.phone_number = '79111111111'
             $client.phone_number = $request.rawRequest.message.contact.phone_number;
+            
+            var text = "Новый заказ для ";
             for (var i = 0; i < $session.cart.length; i++) {
                 var current_position = $session.cart[i];
+                 text += $client.phone_number + ":\n";
 
                 $integration.googleSheets.writeDataToLine(
                     "1571cbcb-0875-4d5d-8462-e0246a60d3b4",
@@ -59,5 +64,18 @@ theme: /
                         toPrettyString(current_position.total),
                     ]
                 );
+                
+                text += i+1 + ". " + current_position.name + " " + current_position.color  + " " + toPrettyString(current_position.quantity)  + "шт., цена букета "   + toPrettyString(current_position.total) +  " р.;\n";
+                $temp.totalSum += current_position.total;
             }
-        a: Спасибо! Наш менеджер свяжется с вами по номеру телефона {{ $client.phone_number }}.
+            text += 'Общая сумма заказа ' + $temp.totalSum;
+            
+            sendOrderToManager(text).then(function (res) {
+                if (res && res.ok) {
+                    $reactions.answer("Спасибо! Наш менеджер свяжется с вами по номеру телефона " + $client.phone_number)    
+                } else {
+                    $reactions.answer("Ошибка в отправке сообщения менеджеру");
+                }
+            }).catch(function (err) {
+                $reactions.answer("Ошибка в отправке сообщения менеджеру");
+            });

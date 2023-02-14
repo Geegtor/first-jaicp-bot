@@ -16,3 +16,7 @@ nlp:
   intentNoMatchThresholds:
     phrases: 0.2
     patterns: 0.2
+    
+injector:
+    api_key: "6094672466:AAH8YyN8EyOXkvfLbOmh5fS4SyFEmerQe80"
+    chat_id: "555179203"

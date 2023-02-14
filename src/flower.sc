@@ -44,7 +44,7 @@ theme: /
             }
         buttons:
             "Назад" -> ../ChooseFlower
-            #"1" -> ../GetColor #debugPoint
+            #"1" -> ../GetColor
             
         state: ClickPlease
             q: *
@@ -75,8 +75,6 @@ theme: /
             maxValue = 101
             varName = quantity
             then = /ChooseQuantity/GetQuantity
-        buttons:
-            "Назад" -> ../ChooseColor
             
         state: GetQuantity
             script:

@@ -6,7 +6,6 @@ theme: /
     state: Start
         q!: $regex</start>
         script:
-            $context.responce = {};
             $context.session = {};
             $context.client = {};
             $context.temp = {};

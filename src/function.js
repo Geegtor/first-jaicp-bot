@@ -43,3 +43,19 @@ function editText(messageId, text) {
     $response.replies = $response.replies || [];
     $response.replies.push(reply);
 }
+
+
+var MNGR_CHAT = $injector.chat_id;
+var BOT_TOKEN = $injector.api_key;
+
+function sendOrderToManager(text) {
+    return $http.get("https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT}&text=${MSG}", {
+        timeout: 10000,
+        query:{
+            TOKEN: BOT_TOKEN,
+            CHAT: MNGR_CHAT,
+            MSG: text
+        }
+    });
+}
+
